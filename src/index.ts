@@ -20,6 +20,7 @@ class Servidor{
     config():void{
         this.api.set('port', process.env.PORT || 3000);
         this.api.use(morgan('dev'));
+        
         this.io.on('connection',(socket)=>{
             const id = socket.id;
             const rol:string = String(socket.handshake.query['rol']);
