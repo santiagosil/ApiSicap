@@ -30,7 +30,9 @@ class Servidor{
     }
     routes():void{
         this.api.get('',(req:Request,res:Response)=>{
-            res.json({"hola":"mundo"});
+            res.json({"hola":"mundo",
+            "key":"value",
+            "key2":"value"});
         });
     }
     start():void{
