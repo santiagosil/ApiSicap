@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import http from 'http';
 import morgan from 'morgan';
 import socketio from 'socket.io';
+import usersRoutes from './routes/usersRoutes';
 
 class Servidor{
 
@@ -20,7 +21,8 @@ class Servidor{
     config():void{
         this.api.set('port', process.env.PORT || 3000);
         this.api.use(morgan('dev'));
-        
+        this.api.use(express.json());
+        this.api.use(express.urlencoded({extended:false}));
         this.io.on('connection',(socket)=>{
             const id = socket.id;
             const rol:string = String(socket.handshake.query['rol']);
@@ -29,11 +31,7 @@ class Servidor{
         });
     }
     routes():void{
-        this.api.get('',(req:Request,res:Response)=>{
-            res.json({"hola":"mundo",
-            "key":"value",
-            "key2":"value"});
-        });
+        this.api.use('/api/user',usersRoutes);
     }
     start():void{
         this.server.listen(this.api.get('port'), ()=>{
