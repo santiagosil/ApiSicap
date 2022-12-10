@@ -1,0 +1,360 @@
+create table languaje(
+	id int identity(1,1) primary key,
+	name varchar(100) not null
+);
+
+INSERT INTO languaje (name) VALUES 
+('Español'),
+('English');
+
+create table sexual_orientation(
+	id int  not null,
+	name varchar(100) not null,
+	languaje_id int not null,
+	primary key(id,languaje_id),
+	foreign key (languaje_id) REFERENCES  languaje(id)
+);
+
+INSERT INTO sexual_orientation(languaje_id,id,name) VALUES 
+(1,0,'Heterosexual'),
+(1,1,'Homosexual'),
+(1,2,'Bisexual'),
+(1,3,'Pansexual'),
+(1,4,'Asexual'),
+(2,0,'Heterosexual'),
+(2,1,'Homosexual'),
+(2,2,'Bisexual'),
+(2,3,'Pansexual'),
+(2,4,'Asexual');
+
+
+create table educational_level(
+	id int not null,
+	name varchar(100) not null,
+	languaje_id int not null,
+	primary key(id,languaje_id),
+	foreign key (languaje_id) REFERENCES  languaje(id)
+);
+
+INSERT INTO educational_level(languaje_id,id,name) VALUES 
+	(1,0,'Básica primaria'),
+	(1,1,'Básica secundaria'),
+	(1,2,'Media'),
+	(1,3,'Técnica y/o tecnológica'),
+	(1,4,'Pregrado (Universidad)'),
+	(1,5,'Postgrado u otros'),
+	(2,0,'Basic primary'),
+	(2,1,'Basic secondary'),
+	(2,2,'High school'),
+	(2,3,'echnical and/or technological'),
+	(2,4,'Undergraduate (University)'),
+	(2,5,'Postgraduate or other');
+
+create table marital_status(
+	id int not null,
+	name varchar(100) not null,
+	languaje_id int not null,
+	primary key(id,languaje_id),
+	foreign key (languaje_id) REFERENCES  languaje(id)
+);
+
+INSERT INTO marital_status(languaje_id,id,name) VALUES
+	(1,0,'Soltero/a'),
+	(1,1,'Casado/a'),
+	(1,2,'Viudo/a'),
+	(1,3,'Unión libre'),
+	(2,0,'Single'),
+	(2,1,'Married'),
+	(2,2,'Widowed'),
+	(2,3,'Free union');
+
+create table etnia(
+	id int not null,
+	name varchar(100) not null,
+	languaje_id int not null,
+	primary key(id,languaje_id),
+	foreign key (languaje_id) REFERENCES  languaje(id)
+);
+
+INSERT INTO etnia(languaje_id,id,name) VALUES 
+	(1,0,'Ninguno'),
+	(1,1,'Comunidades Negras-Afrocolombianas'),
+	(1,2,'Pueblos Indígenas'),
+	(1,3,'Pueblo Rrom o Gitano'),
+	(1,4,'Raizales y Palenqueras- NARP'),
+	(1,5,'Otro'),
+	(2,0,'None'),
+	(2,1,'Black-Afro-Colombian Communities'),
+	(2,2,'Indigenous Peoples'),
+	(2,3,'Rrom or Gypsy People'),
+	(2,4,'Raizales and Palenqueras- NARP'),
+	(2,5,'Other');
+
+create table gender(
+	id int not null,
+	name varchar(100) not null,
+	languaje_id int not null,
+	primary key(id,languaje_id),
+	foreign key (languaje_id) REFERENCES  languaje(id)
+);
+
+INSERT INTO gender(languaje_id,id,name) VALUES
+	(1,0,'Hombre'),
+	(1,1,'Mujer'),
+	(1,2,'No binario'),
+	(2,0,'Man'),
+	(2,1,'Female'),
+	(2,2,'No binary');
+
+create table occupation(
+	id int not null,
+	name varchar(100) not null,
+	languaje_id int not null,
+	primary key(id,languaje_id),
+	foreign key (languaje_id) REFERENCES  languaje(id)
+);
+
+insert into occupation (languaje_id,id,name) VALUES 
+	(1,0,'Desempleado'),
+	(1,1,'Estudiante'),
+	(1,2,'Empleado/a particular (Sector privado)'),
+	(1,3,'Empleado/a del gobierno (Sector público)'),
+	(1,4,'Empleado/a doméstico'),
+	(1,5,'Empleador/a'),
+	(1,6,'Trabajador/a por cuenta propia (Independiente)'),
+	(1,7,'Trabajador/a familiar sin remuneración'),
+	(2,0,'unemployed'),
+	(2,1,'Student'),
+	(2,2,'Private employee (private sector)'),
+	(2,3,'Government employee (Public sector)'),
+	(2,4,'Domestic employee'),
+	(2,5,'Employer'),
+	(2,6,'Self-employed (Self-employed)'),
+	(2,7,'Unpaid family worker');
+	
+	
+
+create table users(
+	identification varchar(50) primary key,
+	password varchar(30) not null,
+	languaje_id int not null,
+	name varchar(100) not null,
+	lastname varchar(100) not null,
+	gender_id int not null,
+	email varchar(100) not null,
+	birthdate date not null,
+	country_code varchar(4) not null,
+	phone varchar(15) not null,
+	occupation_id int not null,
+	postal_code varchar(50) not null,
+	marital_status_id int not null,
+	geolocalitation varchar(200) not null,
+	lat float not null,
+	lng float not null,
+	code varchar(4) not null,
+	verification bit not null,
+	sexual_orientation_id int not null,
+	educational_level_id int not null,
+	etnia_id int not null,
+	foreign key (languaje_id) REFERENCES languaje(id),
+	foreign key (gender_id,languaje_id) REFERENCES gender(id,languaje_id),
+	foreign key (sexual_orientation_id,languaje_id) REFERENCES sexual_orientation(id,languaje_id),
+	foreign key (educational_level_id,languaje_id) REFERENCES educational_level(id,languaje_id),
+	foreign key (etnia_id,languaje_id) REFERENCES etnia(id,languaje_id),
+	foreign key (occupation_id,languaje_id) REFERENCES occupation(id,languaje_id),
+	foreign key (marital_status_id,languaje_id) REFERENCES marital_status(id,languaje_id)
+);
+
+INSERT INTO users(
+	identification,
+	password,
+	languaje_id,
+	name,
+	lastname,
+	gender_id,
+	email,
+	birthdate ,
+	country_code,
+	phone,
+	occupation_id,
+	postal_code,
+	marital_status_id,
+	geolocalitation,
+	lat,
+	lng,
+	code,
+	verification,
+	sexual_orientation_id,
+	educational_level_id,
+	etnia_id
+) VALUES (
+	'123456789',
+	'Pass1234',
+	1,
+	'Johan',
+	'Silva',
+	0,
+	'jsantiagosilva@ucundinamarca.edu.co',
+	'08/02/1997',
+	'co',
+	'3005865123',
+	1,
+	'253051',
+	0,
+	'Universidad de Cundinamarca, Calle 15, Gibraltar, Facatativá, Sabana Occidente, Cundinamarca, 253051, Colombia',
+	4.828775804231745,
+	-74.35470751087708,
+	0911,
+	0,
+	0,
+	4,
+	0);
+
+create table violence_type(
+	id int not null,
+	languaje_id int not null,
+	name varchar(100) not null,
+	description varchar(450) not null,
+	primary key (id,languaje_id),
+	foreign key (languaje_id) REFERENCES languaje(id)
+);
+
+INSERT INTO violence_type(id,languaje_id,name,description) VALUES 
+(0,1,'Ninguno','No es victima de violencia'),
+(0,1,'Violencia de Infantil','toda forma de perjuicio, castigo, humillación o abuso físico o psicológico, descuido, omisión o trato negligente, malos tratos o explotación sexual, incluidos los actos sexuales abusivos y la violación, y en general toda forma de violencia o agresión sobre el niño, la niña o el adolescente por cualquier persona'),
+(0,1,'Violencia intrafamiliar','Violencia ejercida en el terreno de la convivencia asimilada, por parte de uno de los miembros contra otro, contra algunos de los demás o contra todos ellos'),
+(0,1,'Violencia Adulto Mayor','Cualquier acción u omisión que produce daño, vulnera el respeto a la dignidad y el ejercicio de los derechos de una persona adulta mayor'),
+(0,1,'Violencia de Género','Dirigida a las mujeres por el mero hecho de serlo, es decir, por considerar que el sexo femenino es inferior');
+
+create table organization_type(
+	id int,
+	languaje_id int not null,
+	name varchar(100) not null,
+	description varchar(200) not null,
+	primary key (id,languaje_id),
+	foreign key (languaje_id) REFERENCES languaje(id)
+);
+
+insert into organization_type(id,languaje_id,description) VALUES
+(1,1,'Policia','Gobierno del Ente Policial'),
+(1,2,'Police','Police Entity government');
+
+create table organization(
+	nit varchar(50) primary key,
+	password varchar(30) not null,
+	languaje_id int not null,
+	name varchar(100) not null,
+	tel varchar(15) not null,
+	phone varchar(15) not null,
+	organization_type_id int not null,
+	foreign key(languaje_id) REFERENCES languaje(id),
+	foreign key (organization_type_id,languaje_id) references organization_type(id,languaje_id)
+);
+
+INSERT INTO organization(nit,password,languaje_id,name,tel,phone,organization_type_id) VALUES
+	('80369852147','thePolice',1,'Policia Nacional', '8524568','3002586932',1);
+
+create table site(
+	id varchar(50), 
+	nit varchar(50),
+	password varchar(50) not null,
+	languaje_id int not null,
+	geolocalitation varchar(200) not null,
+	lat float not null,
+	lng float not null,
+	range int not null,
+	country_code varchar(4) not null,
+	phone varchar(15) not null,
+	tel varchar(15) not null,
+	primary key (id, nit),
+	Foreign Key(nit) References organization(nit),
+	foreign key(languaje_id) REFERENCES languaje(id)
+);
+
+INSERT INTO site(
+	id,
+	nit,
+	password,
+	languaje_id,
+	geolocalitation,
+	lat,
+	lng,
+	range,
+	country_code,
+	phone,
+	tel
+) VALUES (
+	'Sede Facatativá',
+	'80369852147',
+	'facaPolice',
+	1,
+	'Estación de Policía de Facatativá, Carrera 5, La Campiña, Facatativá, Sabana Occidente, Cundinamarca, 253051, Colombia',
+	4.8097500694777,
+	-74.35015683319658,
+	200,
+	'co',
+	'3215468521',
+	'8425236'
+);
+
+create table violence_types_organization(
+	organization_type_id int not null,
+	id_violence int not null,
+	languaje_id int not null,
+	primary key(organization_type_id, id_violence),
+	foreign key (organization_type_id, languaje_id) references organization_type(id,languaje_id),
+	foreign key (id_violence,languaje_id) references violence_type(id,languaje_id)
+);
+
+--continuar desde aqui
+
+create table state(
+	id int identity(0,1) primary key, 
+	name varchar(100) not null,
+	description varchar(200) not null
+);
+
+insert into state(name,description) VALUES 
+('Active','this alert is active'),
+('In Progress','this alert is in progress'),
+('serviced','this alert is serviced');
+
+create table notify(
+	id int identity(1,1) primary key,
+	user_id varchar(50) not null,
+	date datetime not null,
+	title varchar(150) not null,
+	state_id int not null,
+	description varchar(500) not null,
+	violence_type_id int not null,
+	Foreign Key(user_id) References users(identification),
+	Foreign Key(state_id) References state(id),
+	Foreign Key(violence_type_id) References violence_type(id),
+);
+
+create table poll(
+	id int identity(1,1) primary key,
+	user_id varchar(50) NOT NULL,
+	date datetime not null,
+	--genero int not null, /*0=Hombre, 1=Mujer, 2=No Binario*/
+	--orientacion_sexual int not null, /*0=Hetero, 1=Homosexual, 2=Bisexual, 3=Pansexual, 4=Asexual*/
+	--edad int not null,
+	--municipio int not null, /*0=Bogota, 1=Facatativa, 2=Madrid, 3=Mosquera, 4=Funza, 5=Otro*/
+	--postal_code int not null, /*codigo Postal*/
+	--nivel_educativo int not null, /*0=Basica primaria, 1=Basica Secundaria, 2=Media, 3=(Tecnica, Tecnologica), 4=Pregrado, 5=Postgrado */
+	--estado_civil int not null, /*0=Soltero, 1=Casado, 2=Viudo,3=Union Libre*/
+	--etnia int not null, /*0=Ninguno,1=Comunidades Negras-Afrocolombianas, 2=Pueblos Indígenas,3=Pueblo Rrom o Gitano,4=Raizales y Palenqueras- NARP, 5=Otro*/
+	income int not null, /*0=No, 1=Si*/
+	--ocupacion int not null, /*0=Desempleado, 1=Estudiante, 2=Empleado/a particular (Sector privado), 3=Empleado/a del Gobierno (Sector público)
+							  --4=Empleado/a doméstico/a,5=Empleador/a, 6=Trabajador/a por cuenta propia (Independiente), 7=Trabajador/a familiar sin remuneración*/
+	q1 int not null, /* ¿Ha observado a esa persona golpear o patear la pared o algún otro mueble? 0=No, 1=Si*/
+	q2 int not null, /*¿Le han amenazado con golpearle? */
+	q3 int not null, /*¿Se ha sentido presionado a tener relaciones sexuales? */
+	q4 int not null, /*¿Le han destruido algunas de sus pertenencias? */
+	q5 int not null, /*¿Le han sacudido, zarandeado, jaloneado o empujado? */
+	q6 int not null, /*¿Se ha sentido agredido física o psicológicamente? */
+	q7 int not null, /*¿Ha sufrido o sido testigo de algún tipo de violencia? ¿Cuál? 0=Ninguna, 1=Violencia Infantil, 2=Violencia intrafamiliar,
+						3=Violencia Adulto Mayor, 4=Violencia de Género*/
+	FOREIGN KEY (user_id) REFERENCES users(identification)
+);
+
