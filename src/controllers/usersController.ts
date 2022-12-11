@@ -1,9 +1,10 @@
-import {Request, Response} from 'express';
+import {NextFunction, Request, Response} from 'express';
 import db from '../database/connection';
+import {BaseController} from './BaseController';
 
-class UsersController{
+class UsersController extends BaseController{
     getAllUsers(req: Request, res: Response){
-        res.json({"prueba":"api"});
+        return res.json({"prueba":"ok"});   
     }
 }
 const usersController = new UsersController();

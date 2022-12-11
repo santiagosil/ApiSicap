@@ -1,5 +1,5 @@
 import sql from 'mssql';
-import dbSettings from './dbSettings';
+import {dbSettings} from './dbSettings';
 
 class Connection {
     pool!: sql.ConnectionPool;
@@ -11,4 +11,4 @@ class Connection {
     }
 }
 const connection = new Connection();
-export default connection;
+export default connection.getConnection();

@@ -1,4 +1,4 @@
-const dbSettings={
+export const dbSettings={
   user: 'admin',
   password: '1234',
   server:'localhost',
@@ -8,4 +8,6 @@ const dbSettings={
       trustServerCertificate: true
   }
 };
-export default dbSettings;
+export const jwt={
+  key:'I0HI1!mSV1vd'
+}

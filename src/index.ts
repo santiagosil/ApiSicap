@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import http from 'http';
 import morgan from 'morgan';
 import socketio from 'socket.io';
+import authRoutes from './routes/authRoutes';
 import usersRoutes from './routes/usersRoutes';
 
 class Servidor{
@@ -31,6 +32,7 @@ class Servidor{
         });
     }
     routes():void{
+        this.api.use('/api/auth',authRoutes);
         this.api.use('/api/user',usersRoutes);
     }
     start():void{

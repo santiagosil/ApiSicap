@@ -83,11 +83,11 @@ insert into occupation (id,name) VALUES
 
 create table users(
 	identification varchar(50) primary key,
-	password varchar(30) not null,
+	password varchar(100) not null,
 	name varchar(100) not null,
 	lastname varchar(100) not null,
 	gender_id int not null,
-	email varchar(100) not null,
+	email varchar(100) not null UNIQUE,
 	birthdate datetime not null,
 	country_code varchar(4) not null,
 	phone varchar(15) not null,
@@ -133,7 +133,7 @@ INSERT INTO users(
 	etnia_id
 ) VALUES (
 	'123456789',
-	'Pass1234',
+	'$2a$10$rhcOK7kXX.4iQ/UrZa3EHOeBIrq1ZPmyufm/rIXRJ0XOSmyikHC1i',
 	'Johan',
 	'Silva',
 	0,
@@ -179,7 +179,7 @@ insert into organization_type(id,name,description) VALUES
 
 create table organization(
 	nit varchar(50) primary key,
-	password varchar(30) not null,
+	password varchar(100) not null,
 	name varchar(100) not null,
 	tel varchar(15) not null,
 	phone varchar(15) not null,
@@ -219,7 +219,7 @@ INSERT INTO site(
 ) VALUES (
 	'Sede Facatativá',
 	'80369852147',
-	'facaPolice',
+	'$2a$10$93vplGv2hhn6yQg6XSRwwuO/n.T9XiWZYXvKR4.IZ.iFT.qRThGf.',
 	'Estación de Policía de Facatativá, Carrera 5, La Campiña, Facatativá, Sabana Occidente, Cundinamarca, 253051, Colombia',
 	4.8097500694777,
 	-74.35015683319658,
