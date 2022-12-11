@@ -1,28 +1,14 @@
-import sql, { connect } from 'mssql';
-import keys from './keys';
+import sql from 'mssql';
+import {dbSettings} from './dbSettings';
 
 class Connection {
     pool!: sql.ConnectionPool;
     constructor() {
-        //this.connect();
     }
-    async queryTest() {
-        try {
-            this.pool = await sql.connect(keys);
-            const result = await this.pool.request()
-                .input('email', sql.VarChar, 'test')
-                .query('SELECT * FROM users');
-            console.log(result);
-        } catch (err) {
-            console.log(err);
-
-        }
-
-
-    }
-    async connect() {
-
+    async getConnection() {
+       this.pool=await sql.connect(dbSettings);
+       return this.pool;
     }
 }
 const connection = new Connection();
-export default connection;
+export default connection.getConnection();
