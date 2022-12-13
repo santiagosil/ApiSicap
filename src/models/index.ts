@@ -1,6 +1,7 @@
 export * from './educationalLevel';
 export * from './etnia';
 export * from './gender';
+export * from './login';
 export * from './maritalStatus';
 export * from './notify';
 export * from './occupation';

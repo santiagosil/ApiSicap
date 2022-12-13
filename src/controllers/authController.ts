@@ -1,31 +1,31 @@
 import { Request, Response } from "express";
 import { IResult } from "mssql";
 import db from '../database/connection';
-import { User } from "../models";
+import { User, Login } from "../models";
 import jwtoken from 'jsonwebtoken';
 import { jwt } from "../database/dbSettings";
 import bcrypt from 'bcryptjs';
 
 class AuthController{
     async login(req: Request,res:Response){
-        const {identification, password, role} = req.body;
+        const login:Login = req.body;
         let result:IResult<any> = await (await db).request().query('SELECT 1');
-        if(role==='user'){
+        if(login.role==='user'){
             result= await (await db).request()
-            .input('identification', identification)
+            .input('identification', login.identification)
             .query('SELECT * FROM users WHERE identification=@identification');
         }
-        if(role==='organization'){
+        if(login.role==='organization'){
             result= await (await db).request()
-            .input('identification', identification)
+            .input('identification', login.identification)
             .query('SELECT * FROM organization WHERE nit=@identification');
             
         }
         let user:User = result.recordset[0];
-        if(!(await bcrypt.compare(password,user.password))){
+        if(!(await bcrypt.compare(login.password,user.password))){
             return res.json({
                 login:false,
-                role,
+                role:login.role,
                 token:''
             })
         }
@@ -36,7 +36,7 @@ class AuthController{
         });
             res.json({
                 login:true,
-                role,
+                role:login.role,
                 token
             });
         

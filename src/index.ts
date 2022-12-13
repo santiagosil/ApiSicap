@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import socketio from 'socket.io';
 import authRoutes from './routes/authRoutes';
 import usersRoutes from './routes/usersRoutes';
+import cors from 'cors';
 
 class Servidor{
 
@@ -22,6 +23,7 @@ class Servidor{
     config():void{
         this.api.set('port', process.env.PORT || 3000);
         this.api.use(morgan('dev'));
+        this.api.use(cors());
         this.api.use(express.json());
         this.api.use(express.urlencoded({extended:false}));
         this.io.on('connection',(socket)=>{
@@ -39,6 +41,7 @@ class Servidor{
         this.server.listen(this.api.get('port'), ()=>{
             console.log('Listen on port:',this.api.get('port'));
         });
+        
     }
 }
 const servidor = new Servidor();
